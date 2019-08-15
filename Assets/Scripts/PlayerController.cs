@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -21,19 +22,30 @@ public class PlayerController : MonoBehaviour
   void Update()
   {
     Interact();
+    UseObject();
     Move();
     OrientationToMouse();
   }
 
+  private void UseObject()
+  {
+    if (Input.GetMouseButtonDown(0))
+    {
+      var item = RightHand.transform.GetComponentInChildren<Item>();
+      if (item != null)
+        item.Use();
+    }
+  }
+
   void Interact()
   {
-    if(Input.GetKeyDown(KeyCode.E))
+    if (Input.GetKeyDown(KeyCode.E))
     {
       var obj = _touched.FirstOrDefault();
-     if(obj != null)
+      if (obj != null)
       {
         var pickup = obj.GetComponent<ItemPickup>();
-        if(pickup != null)
+        if (pickup != null)
         {
           var item = Instantiate(pickup.TheItem, RightHand.transform.position, RightHand.transform.rotation);
           item.transform.parent = RightHand.transform;
