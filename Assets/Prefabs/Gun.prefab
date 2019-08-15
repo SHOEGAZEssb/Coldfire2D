@@ -47,6 +47,9 @@ MonoBehaviour:
   ItemPrefab: {fileID: 4080123360124765323}
   PickupItem: {fileID: 865706855880250407, guid: 3bfcc5b944976ea449fc6d63a7060af0,
     type: 3}
+  bulletSpawn: {fileID: 0}
+  bulletPrefab: {fileID: 1834188386835907934, guid: 3a290328d32248645b302aa0cf042dd1,
+    type: 3}
 --- !u!212 &8431878073563973482
 SpriteRenderer:
   m_ObjectHideFlags: 0
