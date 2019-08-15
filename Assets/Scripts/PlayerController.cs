@@ -1,10 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
   public float Speed = .3f;
+  public GameObject RightHand;
+  public List<GameObject> _touched;
+
   // Start is called before the first frame update
   void Start()
   {
@@ -16,14 +20,27 @@ public class PlayerController : MonoBehaviour
   // Update is called once per frame
   void Update()
   {
+    Interact();
     Move();
     OrientationToMouse();
   }
 
-  void OrientationToMouse()
+  void Interact()
   {
-    Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-    transform.rotation = Quaternion.LookRotation(Vector3.forward, mousePos - transform.position);
+    if(Input.GetKeyDown(KeyCode.E))
+    {
+      var obj = _touched.FirstOrDefault();
+     if(obj != null)
+      {
+        var pickup = obj.GetComponent<ItemPickup>();
+        if(pickup != null)
+        {
+          var item = Instantiate(pickup.TheItem, RightHand.transform.position, RightHand.transform.rotation);
+          item.transform.parent = RightHand.transform;
+          Destroy(obj);
+        }
+      }
+    }
   }
 
   void Move()
@@ -37,6 +54,21 @@ public class PlayerController : MonoBehaviour
       move.Normalize();
       transform.position += move * Speed;
     }
-      
+  }
+
+  void OrientationToMouse()
+  {
+    Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    transform.rotation = Quaternion.LookRotation(Vector3.forward, mousePos - transform.position);
+  }
+
+  void OnTriggerLeave2D(Collider2D coll)
+  {
+    _touched.Remove(coll.gameObject);
+  }
+
+  void OnTriggerEnter2D(Collider2D coll)
+  {
+    _touched.Add(coll.gameObject);
   }
 }
