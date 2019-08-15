@@ -27,16 +27,6 @@ public class PlayerController : MonoBehaviour
     OrientationToMouse();
   }
 
-  private void UseObject()
-  {
-    if (Input.GetMouseButtonDown(0))
-    {
-      var item = RightHand.transform.GetComponentInChildren<Item>();
-      if (item != null)
-        item.Use();
-    }
-  }
-
   void Interact()
   {
     if (Input.GetKeyDown(KeyCode.E))
@@ -49,9 +39,37 @@ public class PlayerController : MonoBehaviour
         {
           var item = Instantiate(pickup.TheItem, RightHand.transform.position, RightHand.transform.rotation);
           item.transform.parent = RightHand.transform;
+          var inventory = GetComponent<Inventory>();
+          if (inventory != null)
+            inventory.AddItem(item.GetComponent<Item>());
+
+          _touched.Remove(obj); 
           Destroy(obj);
         }
       }
+    }
+    else if(Input.GetKeyDown(KeyCode.Q))
+    {
+      var item = RightHand.GetComponentInChildren<Item>();
+      if(item != null)
+      {
+        Instantiate(item.PickupItem, item.transform.position, item.transform.rotation);
+        Destroy(item.gameObject);
+
+        var inventory = GetComponent<Inventory>();
+        if (inventory != null)
+          inventory.RemoveItem(item);
+      }
+    }
+  }
+
+  private void UseObject()
+  {
+    if (Input.GetMouseButtonDown(0))
+    {
+      var item = RightHand.transform.GetComponentInChildren<Item>();
+      if (item != null)
+        item.Use();
     }
   }
 
@@ -74,7 +92,7 @@ public class PlayerController : MonoBehaviour
     transform.rotation = Quaternion.LookRotation(Vector3.forward, mousePos - transform.position);
   }
 
-  void OnTriggerLeave2D(Collider2D coll)
+  void OnTriggerExit2D(Collider2D coll)
   {
     _touched.Remove(coll.gameObject);
   }

@@ -44,6 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9140cb6bbe3f094997e8fde633d3416, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ItemPrefab: {fileID: 4080123360124765323}
+  PickupItem: {fileID: 865706855880250407, guid: 3bfcc5b944976ea449fc6d63a7060af0,
+    type: 3}
 --- !u!212 &8431878073563973482
 SpriteRenderer:
   m_ObjectHideFlags: 0
