@@ -37,21 +37,28 @@ public class PlayerController : MonoBehaviour
         var pickup = obj.GetComponent<ItemPickup>();
         if (pickup != null)
         {
-          var item = Instantiate(pickup.TheItem, RightHand.transform.position, RightHand.transform.rotation);
-          item.transform.parent = RightHand.transform;
+          GameObject item;
+          if (RightHand.GetComponentInChildren<Item>() == null)
+          {
+            item = Instantiate(pickup.TheItem, RightHand.transform.position, RightHand.transform.rotation);
+            item.transform.parent = RightHand.transform;
+          }
+          else
+            item = pickup.TheItem;
+
           var inventory = GetComponent<Inventory>();
           if (inventory != null)
             inventory.AddItem(item.GetComponent<Item>());
 
-          _touched.Remove(obj); 
+          _touched.Remove(obj);
           Destroy(obj);
         }
       }
     }
-    else if(Input.GetKeyDown(KeyCode.Q))
+    else if (Input.GetKeyDown(KeyCode.Q))
     {
       var item = RightHand.GetComponentInChildren<Item>();
-      if(item != null)
+      if (item != null)
       {
         Instantiate(item.PickupItem, item.transform.position, item.transform.rotation);
         Destroy(item.gameObject);
