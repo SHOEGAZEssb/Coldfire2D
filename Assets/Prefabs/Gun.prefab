@@ -51,6 +51,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1834188386835907934, guid: 3a290328d32248645b302aa0cf042dd1,
     type: 3}
   bulletSpawn: {fileID: 76129760334227802}
+  dmg: 20
 --- !u!212 &8431878073563973482
 SpriteRenderer:
   m_ObjectHideFlags: 0
