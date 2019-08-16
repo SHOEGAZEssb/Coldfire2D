@@ -7,6 +7,7 @@ public class Sword : Item
   public Transform aoePos;
   public float aoeRange;
   public List<GameObject> enemiesInRange;
+  public int dmg;
 
   // Start is called before the first frame update
   void Start()
@@ -28,7 +29,7 @@ public class Sword : Item
       if (obj.CompareTag("enemy"))
       {
         Debug.Log("Damage to: " + obj.name);
-        obj.GetComponent<ItemPickup>().Test();
+        obj.GetComponent<Enemy>().TakeDamage(dmg);
       }
       
     }
