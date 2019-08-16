@@ -3,11 +3,12 @@
 public class Gun : Item
 {
   public GameObject bulletPrefab;
+  public Transform bulletSpawn;
 
   public override void Use()
   {
     Debug.Log("SHOOT");
-    Instantiate(bulletPrefab, transform.position, transform.rotation);
+    Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
   }
 
   // Start is called before the first frame update
